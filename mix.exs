@@ -50,7 +50,7 @@ defmodule Downsight.MixProject do
       {:pow, "~> 1.0.21"},
       {:bcrypt_elixir, "~> 2.0"},
       {:castore, "~> 0.1.0"},
-      {:mint, "~> 1.0"},
+      {:finch, "~> 0.5"},
       {:plug_cowboy, "~> 2.0"}
     ]
   end

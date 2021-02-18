@@ -14,6 +14,20 @@ defmodule DownsightWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :api_protected do
+    plug :accepts, ["json"]
+    plug :authorize
+  end
+
+  def authorize(conn, _opts) do
+    case conn
+         |> fetch_session()
+         |> get_session(:us) do
+      x when is_nil(x) -> conn |> send_resp(403, "Unauthorized") |> halt()
+      _ -> conn
+    end
+  end
+
   scope "/", DownsightWeb do
     pipe_through :browser
 
@@ -27,7 +41,16 @@ defmodule DownsightWeb.Router do
 
     post "/create", UserController, :create
     post "/login", UserController, :login
+  end
+
+  scope "/api/me", DownsightWeb do
+    pipe_through :api_protected
     get "/session", UserController, :session
+  end
+
+  scope "/api/service", DownsightWeb do
+    pipe_through :api_protected
+    post "/create", ServiceController, :create
   end
 
   # Enables LiveDashboard only for development

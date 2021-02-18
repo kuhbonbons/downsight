@@ -7,6 +7,7 @@ defmodule DownsightWeb.UserController do
   def create(conn, user) do
     user = %{user | "password" => Bcrypt.hash_pwd_salt(user["password"])}
     change = User.changeset(%User{}, user)
+
     if change.valid? do
       Repo.insert(change)
 
@@ -24,23 +25,26 @@ defmodule DownsightWeb.UserController do
       user -> conn |> json(%{username: user.username, email: user.email})
     end
   end
+
   def login(conn, %{"username" => username, "password" => password}) do
-    with [found] <-
+    with found <-
            Repo.all(
              from u in User,
                where: u.username == ^username
            ),
-         true <- Bcrypt.verify_pass(password, found.password) do
+         user <- List.first(found),
+         true <- Bcrypt.verify_pass(password, user.password) do
       conn
       |> fetch_session()
-      |> put_session(:us, found)
+      |> put_session(:us, user)
       |> send_resp(204, "")
     else
-      _ ->
+      e ->
+        IO.inspect(e)
+
         conn
         |> send_resp(403, "User not found")
     end
-
   end
 
   def login(conn, _) do

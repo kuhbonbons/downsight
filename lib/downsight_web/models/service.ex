@@ -6,11 +6,10 @@ defmodule Downsight.Service do
   schema "services" do
     field :name, :string
     field :description, :string
-    field :endpoint, :string
-    field :method, :string
-    field :port, :integer
-    field :path, :string
-    field :headers, :string
+    field :url, :string
+    field :method, :string, default: "get"
+    field :port, :integer, default: 80
+    field :headers, :string, default: "[]"
     field :manual_status, :string
     belongs_to :user, Downsight.User
     has_many :incidents, Downsight.Incident
@@ -19,7 +18,8 @@ defmodule Downsight.Service do
 
   def changeset(%Service{} = service, attrs) do
     service
-    |> cast(attrs, [:name, :description, :enpoint, :manual_status])
+    |> cast(attrs, [:name, :description, :url, :manual_status, :user_id])
     |> validate_required([:name, :manual_status])
+    |> assoc_constraint(:user)
   end
 end

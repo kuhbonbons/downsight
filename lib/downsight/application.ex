@@ -7,6 +7,8 @@ defmodule Downsight.Application do
 
   def start(_type, _args) do
     children = [
+      # Start Finch HTTP Client
+      {Finch, name: FinchClient},
       # Start the Ecto repository
       Downsight.Repo,
       # Start the Telemetry supervisor
