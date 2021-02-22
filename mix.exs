@@ -51,7 +51,12 @@ defmodule Downsight.MixProject do
       {:bcrypt_elixir, "~> 2.0"},
       {:castore, "~> 0.1.0"},
       {:finch, "~> 0.5"},
-      {:plug_cowboy, "~> 2.0"}
+      {:ex_aws, "~> 2.1.6"},
+      {:ex_aws_sqs, "~> 3.2"},
+      {:configparser_ex, "~> 4.0"},
+      {:plug_cowboy, "~> 2.0"},
+      {:hackney, "~> 1.17.0"},
+      {:saxy, "~> 1.1"}
     ]
   end
 

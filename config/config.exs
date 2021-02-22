@@ -8,7 +8,8 @@
 use Mix.Config
 
 config :downsight,
-  ecto_repos: [Downsight.Repo]
+  ecto_repos: [Downsight.Repo],
+  sqs_queue: ""
 
 # Configures the endpoint
 config :downsight, DownsightWeb.Endpoint,
@@ -17,6 +18,7 @@ config :downsight, DownsightWeb.Endpoint,
   render_errors: [view: DownsightWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Downsight.PubSub,
   live_view: [signing_salt: "9nDhkOGX"]
+
 
 # Configures Elixir's Logger
 config :logger, :console,

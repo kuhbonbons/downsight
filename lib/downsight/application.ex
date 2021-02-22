@@ -16,7 +16,8 @@ defmodule Downsight.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Downsight.PubSub},
       # Start the Endpoint (http/https)
-      DownsightWeb.Endpoint
+      DownsightWeb.Endpoint,
+      Downsight.ServiceChecker
       # Start a worker by calling: Downsight.Worker.start_link(arg)
       # {Downsight.Worker, arg}
     ]
